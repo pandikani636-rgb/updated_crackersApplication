@@ -47,6 +47,8 @@ export const Sidebar = () => {
     theme
   } = useApp();
 
+  const isLight = theme === 'light';
+
   // Multi-dropdown state object: { [itemName]: boolean }
   const [openDropdowns, setOpenDropdowns] = useState({
     Agents: false,
@@ -225,25 +227,39 @@ export const Sidebar = () => {
 
       {/* Sidebar Panel */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 bg-slate-950 border-r border-slate-800/80 transition-all duration-300 flex flex-col justify-between ${
+        className={`fixed top-0 bottom-0 left-0 z-50 transition-all duration-300 flex flex-col justify-between ${
           sidebarCollapsed ? 'md:w-20' : 'md:w-64'
-        } ${mobileMenuOpen ? 'translate-x-0 w-64 shadow-2xl' : '-translate-x-full md:translate-x-0'}`}
+        } ${mobileMenuOpen ? 'translate-x-0 w-64 shadow-2xl' : '-translate-x-full md:translate-x-0'} ${
+          isLight
+            ? 'bg-white border-r border-slate-200 text-slate-800 shadow-sm'
+            : 'bg-slate-950 border-r border-slate-800/80 text-slate-100'
+        }`}
       >
         {/* Top Logo */}
         <div className="flex flex-col flex-1 overflow-hidden">
-          <div className="h-18 flex items-center justify-between px-4 border-b border-slate-800/80 shrink-0 py-4">
+          <div className={`h-18 flex items-center justify-between px-4 border-b shrink-0 py-4 ${
+            isLight ? 'border-slate-200 bg-white' : 'border-slate-800/80 bg-slate-950'
+          }`}>
             <div className="flex items-center gap-3 overflow-hidden">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 via-amber-500 to-yellow-400 p-0.5 shadow-lg shadow-orange-500/20 shrink-0">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                  <Flame className="w-5 h-5 text-orange-400 animate-pulse" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 via-amber-500 to-yellow-400 p-0.5 shadow-md shadow-orange-500/20 shrink-0">
+                <div className={`w-full h-full rounded-[10px] flex items-center justify-center ${
+                  isLight ? 'bg-orange-50' : 'bg-slate-950'
+                }`}>
+                  <Flame className="w-5 h-5 text-orange-500 animate-pulse" />
                 </div>
               </div>
               {(!sidebarCollapsed || mobileMenuOpen) && (
                 <div className="truncate">
-                  <h1 className="font-black text-lg text-white tracking-wider flex items-center gap-1">
+                  <h1 className={`font-black text-lg tracking-wider flex items-center gap-1 ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}>
                     Cracker<span className="text-orange-500">Hub</span>
                   </h1>
-                  <p className="text-[10px] text-amber-400 font-semibold tracking-widest uppercase">CRM & Factory ERP</p>
+                  <p className={`text-[10px] font-semibold tracking-widest uppercase ${
+                    isLight ? 'text-amber-600' : 'text-amber-400'
+                  }`}>
+                    CRM & Factory ERP
+                  </p>
                 </div>
               )}
             </div>
@@ -252,7 +268,11 @@ export const Sidebar = () => {
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                className="hidden md:flex p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-colors shrink-0"
+                className={`hidden md:flex p-1.5 rounded-lg border transition-colors shrink-0 ${
+                  isLight
+                    ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-600 hover:text-slate-900'
+                    : 'bg-slate-900 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-white'
+                }`}
                 title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
               >
                 {sidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -260,7 +280,11 @@ export const Sidebar = () => {
 
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="md:hidden p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white shrink-0"
+                className={`md:hidden p-1.5 rounded-lg border shrink-0 ${
+                  isLight
+                    ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-600 hover:text-slate-900'
+                    : 'bg-slate-900 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-white'
+                }`}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -272,7 +296,9 @@ export const Sidebar = () => {
             {navGroups.map((group, idx) => (
               <div key={idx} className="space-y-1">
                 {(!sidebarCollapsed || mobileMenuOpen) && (
-                  <p className="px-3 text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-1">
+                  <p className={`px-3 text-[10px] font-bold tracking-wider uppercase mb-1.5 ${
+                    isLight ? 'text-slate-400' : 'text-slate-500'
+                  }`}>
                     {group.group}
                   </p>
                 )}
@@ -302,8 +328,12 @@ export const Sidebar = () => {
                         }}
                         className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-xs transition-all duration-200 group relative ${
                           active
-                            ? 'bg-gradient-to-r from-orange-500/20 to-amber-500/10 text-orange-400 border border-orange-500/30 shadow-lg shadow-orange-500/10 font-bold'
-                            : 'text-slate-400 hover:text-white hover:bg-slate-900/80 border border-transparent'
+                            ? isLight
+                              ? 'bg-orange-50 text-orange-600 border border-orange-200 shadow-sm font-bold'
+                              : 'bg-gradient-to-r from-orange-500/20 to-amber-500/10 text-orange-400 border border-orange-500/30 shadow-lg shadow-orange-500/10 font-bold'
+                            : isLight
+                              ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
+                              : 'text-slate-400 hover:text-white hover:bg-slate-900/80 border border-transparent'
                         }`}
                         title={sidebarCollapsed && !mobileMenuOpen ? item.name : undefined}
                         aria-expanded={hasDropdown ? isOpen : undefined}
@@ -312,12 +342,20 @@ export const Sidebar = () => {
                         <div className="flex items-center gap-3">
                           <Icon
                             className={`w-4 h-4 shrink-0 transition-all duration-200 group-hover:scale-110 ${
-                              active ? 'text-orange-400 group-hover:text-white' : 'text-slate-400 group-hover:text-white'
+                              active
+                                ? isLight ? 'text-orange-600' : 'text-orange-400 group-hover:text-white'
+                                : isLight ? 'text-slate-500 group-hover:text-orange-600' : 'text-slate-400 group-hover:text-white'
                             }`}
                           />
 
                           {(!sidebarCollapsed || mobileMenuOpen) && (
-                            <span className="truncate group-hover:text-white">{item.name}</span>
+                            <span className={`truncate ${
+                              active
+                                ? isLight ? 'text-orange-600 font-bold' : 'text-orange-400 font-bold'
+                                : isLight ? 'text-slate-700 group-hover:text-slate-900' : 'text-slate-300 group-hover:text-white'
+                            }`}>
+                              {item.name}
+                            </span>
                           )}
                         </div>
 
@@ -326,7 +364,7 @@ export const Sidebar = () => {
                           <div className="flex items-center gap-2">
                             {/* Badge */}
                             {item.badge && (
-                              <span className="px-1.5 py-0.5 text-[10px] font-black rounded-full bg-orange-500 text-slate-950 shadow-md">
+                              <span className="px-1.5 py-0.5 text-[10px] font-black rounded-full bg-orange-500 text-white shadow-sm">
                                 {item.badge}
                               </span>
                             )}
@@ -335,7 +373,9 @@ export const Sidebar = () => {
                             {hasDropdown && (
                               <ChevronDown
                                 className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                                  isOpen ? 'rotate-180 text-orange-400 group-hover:text-white' : 'text-slate-400 group-hover:text-white'
+                                  isOpen
+                                    ? isLight ? 'rotate-180 text-orange-600' : 'rotate-180 text-orange-400 group-hover:text-white'
+                                    : isLight ? 'text-slate-400 group-hover:text-slate-700' : 'text-slate-400 group-hover:text-white'
                                 }`}
                               />
                             )}
@@ -350,7 +390,9 @@ export const Sidebar = () => {
 
                       {/* Expanded Submenu Dropdown for Expanded Sidebar / Mobile */}
                       {hasDropdown && isOpen && (!sidebarCollapsed || mobileMenuOpen) && (
-                        <div className="ml-5 pl-3 mt-1 space-y-1 border-l border-slate-800/80 animate-fade-in">
+                        <div className={`ml-5 pl-3 mt-1 space-y-1 border-l animate-fade-in ${
+                          isLight ? 'border-slate-200' : 'border-slate-800/80'
+                        }`}>
                           {item.subItems.map((sub) => {
                             const subTab = sub.tab || sub.name;
                             const isSubActive = currentTab === subTab;
@@ -362,29 +404,47 @@ export const Sidebar = () => {
                                 onClick={() => handleNavClick(subTab)}
                                 className={`w-full flex items-center justify-between text-left px-3 py-2 rounded-lg text-xs transition-all duration-150 relative group/sub ${
                                   isSubActive
-                                    ? 'text-orange-400 bg-orange-500/15 font-bold border border-orange-500/20 shadow-sm'
-                                    : 'text-slate-400 hover:text-white hover:bg-slate-900/60'
+                                    ? isLight
+                                      ? 'text-orange-600 bg-orange-50 font-bold border border-orange-200/80 shadow-xs'
+                                      : 'text-orange-400 bg-orange-500/15 font-bold border border-orange-500/20 shadow-sm'
+                                    : isLight
+                                      ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 border border-transparent'
+                                      : 'text-slate-400 hover:text-white hover:bg-slate-900/60 border border-transparent'
                                 }`}
                               >
                                 <div className="flex items-center gap-2 truncate">
                                   {SubIcon ? (
                                     <SubIcon
                                       className={`w-3.5 h-3.5 shrink-0 transition-colors ${
-                                        isSubActive ? 'text-orange-400' : 'text-slate-400 group-hover/sub:text-white'
+                                        isSubActive
+                                          ? isLight ? 'text-orange-600' : 'text-orange-400'
+                                          : isLight ? 'text-slate-400 group-hover/sub:text-orange-600' : 'text-slate-400 group-hover/sub:text-white'
                                       }`}
                                     />
                                   ) : (
                                     <span
                                       className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                                        isSubActive ? 'bg-orange-400 ring-2 ring-orange-500/30' : 'bg-slate-600 group-hover/sub:bg-white'
+                                        isSubActive
+                                          ? isLight ? 'bg-orange-500 ring-2 ring-orange-200' : 'bg-orange-400 ring-2 ring-orange-500/30'
+                                          : isLight ? 'bg-slate-300 group-hover/sub:bg-slate-500' : 'bg-slate-600 group-hover/sub:bg-white'
                                       }`}
                                     />
                                   )}
-                                  <span className="truncate text-slate-400 group-hover/sub:text-white">{sub.name}</span>
+                                  <span className={`truncate ${
+                                    isSubActive
+                                      ? isLight ? 'text-orange-600 font-bold' : 'text-orange-400 font-bold'
+                                      : isLight ? 'text-slate-600 group-hover/sub:text-slate-900' : 'text-slate-400 group-hover/sub:text-white'
+                                  }`}>
+                                    {sub.name}
+                                  </span>
                                 </div>
 
                                 {sub.badge > 0 && (
-                                  <span className="px-1.5 py-0.2 text-[9px] font-bold rounded-full bg-slate-800 text-orange-400 border border-slate-700">
+                                  <span className={`px-1.5 py-0.2 text-[9px] font-bold rounded-full ${
+                                    isLight
+                                      ? 'bg-orange-100 text-orange-700 border border-orange-200'
+                                      : 'bg-slate-800 text-orange-400 border border-slate-700'
+                                  }`}>
                                     {sub.badge}
                                   </span>
                                 )}
@@ -396,14 +456,20 @@ export const Sidebar = () => {
 
                       {/* Collapsed Sidebar Hover Popover Submenu */}
                       {sidebarCollapsed && !mobileMenuOpen && hoveredItem === item.name && (
-                        <div className="fixed left-20 z-50 ml-2 w-52 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-2.5 animate-fade-in backdrop-blur-xl">
-                          <div className="px-2.5 py-1.5 border-b border-slate-800/80 mb-1 flex items-center justify-between">
-                            <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                              <Icon className="w-3.5 h-3.5 text-orange-400" />
-                              {item.name}
+                        <div className={`fixed left-20 z-50 ml-2 w-52 rounded-2xl p-2.5 animate-fade-in backdrop-blur-xl ${
+                          isLight
+                            ? 'bg-white border border-slate-200 shadow-xl shadow-slate-300/40'
+                            : 'bg-slate-900 border border-slate-800 shadow-2xl'
+                        }`}>
+                          <div className={`px-2.5 py-1.5 border-b mb-1 flex items-center justify-between ${
+                            isLight ? 'border-slate-100 text-slate-800' : 'border-slate-800/80 text-white'
+                          }`}>
+                            <span className="text-xs font-bold flex items-center gap-1.5">
+                              <Icon className={`w-3.5 h-3.5 ${isLight ? 'text-orange-500' : 'text-orange-400'}`} />
+                              <span className={isLight ? 'text-slate-900' : 'text-white'}>{item.name}</span>
                             </span>
                             {item.badge > 0 && (
-                              <span className="px-1.5 py-0.5 text-[9px] font-black rounded-full bg-orange-500 text-slate-950">
+                              <span className="px-1.5 py-0.5 text-[9px] font-black rounded-full bg-orange-500 text-white shadow-xs">
                                 {item.badge}
                               </span>
                             )}
@@ -421,24 +487,32 @@ export const Sidebar = () => {
                                     onClick={() => handleNavClick(subTab)}
                                     className={`w-full text-left px-2.5 py-1.5 rounded-xl text-xs flex items-center gap-2 transition-colors group/popsub ${
                                       isSubActive
-                                        ? 'bg-orange-500/20 text-orange-400 font-bold border border-orange-500/30'
-                                        : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                                        ? isLight
+                                          ? 'bg-orange-50 text-orange-600 font-bold border border-orange-200'
+                                          : 'bg-orange-500/20 text-orange-400 font-bold border border-orange-500/30'
+                                        : isLight
+                                          ? 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                          : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
                                     }`}
                                   >
                                     {SubIcon ? (
                                       <SubIcon
                                         className={`w-3.5 h-3.5 shrink-0 transition-colors ${
-                                          isSubActive ? 'text-orange-400' : 'text-slate-400 group-hover/popsub:text-white'
+                                          isSubActive
+                                            ? isLight ? 'text-orange-600' : 'text-orange-400'
+                                            : isLight ? 'text-slate-400 group-hover/popsub:text-orange-600' : 'text-slate-400 group-hover/popsub:text-white'
                                         }`}
                                       />
                                     ) : (
                                       <span
                                         className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                                          isSubActive ? 'bg-orange-400' : 'bg-slate-600 group-hover/popsub:bg-white'
+                                          isSubActive
+                                            ? isLight ? 'bg-orange-500' : 'bg-orange-400'
+                                            : isLight ? 'bg-slate-300 group-hover/popsub:bg-slate-500' : 'bg-slate-600 group-hover/popsub:bg-white'
                                         }`}
                                       />
                                     )}
-                                    <span className="truncate text-slate-300 group-hover/popsub:text-white">{sub.name}</span>
+                                    <span className="truncate">{sub.name}</span>
                                   </button>
                                 );
                               })}
@@ -446,7 +520,11 @@ export const Sidebar = () => {
                           ) : (
                             <button
                               onClick={() => handleNavClick(item.tab || item.name)}
-                              className="w-full text-left px-2.5 py-1.5 rounded-xl text-xs text-slate-300 hover:bg-slate-800/80 hover:text-white"
+                              className={`w-full text-left px-2.5 py-1.5 rounded-xl text-xs transition-colors ${
+                                isLight
+                                  ? 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                  : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                              }`}
                             >
                               Open {item.name}
                             </button>
@@ -462,10 +540,16 @@ export const Sidebar = () => {
         </div>
 
         {/* Logout Bottom */}
-        <div className="p-3 border-t border-slate-800/80 shrink-0">
+        <div className={`p-3 border-t shrink-0 ${
+          isLight ? 'border-slate-200 bg-white' : 'border-slate-800/80 bg-slate-950'
+        }`}>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/10 border border-transparent transition-all"
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+              isLight
+                ? 'text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-100'
+                : 'text-rose-400 hover:bg-rose-500/10 border border-transparent'
+            }`}
             title={sidebarCollapsed && !mobileMenuOpen ? 'Logout' : undefined}
           >
             <LogOut className="w-4 h-4 shrink-0" />

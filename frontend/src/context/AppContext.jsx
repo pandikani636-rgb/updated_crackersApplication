@@ -74,11 +74,28 @@ export const AppProvider = ({ children }) => {
     return 'Dashboard';
   });
 
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('crackerhub_theme');
+    return saved || 'light';
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
+
+  // Sync theme with document class & localStorage
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.body.className = 'bg-slate-50 text-slate-900 font-sans antialiased';
+    } else {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      document.body.className = 'bg-[#0b132b] text-slate-100 font-sans antialiased';
+    }
+    localStorage.setItem('crackerhub_theme', theme);
+  }, [theme]);
 
   // Persist session & current tab changes
   useEffect(() => {
