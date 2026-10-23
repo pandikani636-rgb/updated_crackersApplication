@@ -48,8 +48,9 @@ import { InventoryReportsView } from '../views/InventoryReportsView';
 export const AppLayout = () => {
   const { isAuthenticated, currentTab, sidebarCollapsed, theme } = useApp();
 
-  if (!isAuthenticated) {
-    return <BillingView />;
+  // Show the Login page only when explicitly navigated to 'Login'
+  if (currentTab === 'Login') {
+    return <LoginPage />;
   }
 
   const renderCurrentView = () => {
@@ -139,6 +140,10 @@ export const AppLayout = () => {
     }
   };
 
+
+
+
+
   return (
     <div className={`min-h-screen font-sans flex flex-col relative selection:bg-orange-500 selection:text-slate-950 transition-colors duration-300 ${
       theme === 'light' ? 'light-theme bg-slate-50 text-slate-900' : 'bg-[#0b132b] text-slate-100'
@@ -165,4 +170,9 @@ export const AppLayout = () => {
       <ConfirmModal />
     </div>
   );
-};
+}; 
+
+
+
+
+

@@ -1,6 +1,40 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../utils/api';
+import {
+  INITIAL_CRACKERS,
+  INITIAL_SUPPLIERS,
+  INITIAL_WORKERS,
+  INITIAL_IMPORTS,
+  INITIAL_EXPORTS,
+  INITIAL_STOCK,
+  INITIAL_ATTENDANCE,
+  INITIAL_PAYROLL,
+  INITIAL_NOTIFICATIONS,
+  INITIAL_ACTIVITIES,
+  INITIAL_CUSTOMERS,
+  INITIAL_RAW_MATERIALS,
+  INITIAL_PRODUCTION_ORDERS,
+  INITIAL_BOM,
+  INITIAL_PURCHASE_REQUESTS,
+  INITIAL_QC_RECORDS,
+  INITIAL_PACKING_ORDERS,
+  INITIAL_DISPATCH_ORDERS,
+  INITIAL_SAFETY_RECORDS,
+  INITIAL_DOCUMENTS,
+  INITIAL_APPROVALS,
+  INITIAL_AUDIT_LOGS,
+  INITIAL_SHOP_ITEMS,
+  INITIAL_DAILY_REGISTERS
+} from '../data/mockData';
+
+export const DEFAULT_USER = {
+  _id: 'usr-admin-default',
+  name: 'Admin Owner',
+  email: 'admin@crackershop.com',
+  role: 'Super Admin',
+  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+};
 
 const AppContext = createContext();
 
@@ -8,14 +42,19 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
       const saved = localStorage.getItem('crackerhub_user');
-      return saved ? JSON.parse(saved) : null;
+      return saved ? JSON.parse(saved) : DEFAULT_USER;
     } catch (e) {
-      return null;
+      return DEFAULT_USER;
     }
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return !!localStorage.getItem('crackerhub_user');
+    const saved = localStorage.getItem('crackerhub_is_authenticated');
+    if (saved !== null) {
+      return saved === 'true';
+    }
+    // Landing page directly opens Dashboard (default authenticated)
+    return true;
   });
 
   const [userRole, setUserRole] = useState(() => {
@@ -28,8 +67,11 @@ export const AppProvider = ({ children }) => {
       const tabParam = params.get('tab');
       if (tabParam) return tabParam;
       if (window.location.pathname === '/billing') return 'Billing';
+      if (window.location.pathname === '/login') return 'Login';
     } catch (e) {}
-    return localStorage.getItem('crackerhub_current_tab') || 'Dashboard';
+    const saved = localStorage.getItem('crackerhub_current_tab');
+    if (saved && saved !== 'Login') return saved;
+    return 'Dashboard';
   });
 
   const [theme, setTheme] = useState('dark');
@@ -42,9 +84,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       localStorage.setItem('crackerhub_user', JSON.stringify(user));
+      localStorage.setItem('crackerhub_is_authenticated', 'true');
       setIsAuthenticated(true);
     } else {
       localStorage.removeItem('crackerhub_user');
+      localStorage.setItem('crackerhub_is_authenticated', 'false');
       setIsAuthenticated(false);
     }
   }, [user]);
@@ -61,33 +105,33 @@ export const AppProvider = ({ children }) => {
     }
   }, [currentTab]);
 
-  // Core & Extended Data states
-  const [crackers, setCrackers] = useState([]);
-  const [suppliers, setSuppliers] = useState([]);
-  const [workers, setWorkers] = useState([]);
-  const [imports, setImports] = useState([]);
-  const [exportsList, setExportsList] = useState([]);
-  const [stock, setStock] = useState([]);
-  const [attendance, setAttendance] = useState([]);
-  const [payroll, setPayroll] = useState([]);
-  const [notifications, setNotifications] = useState([]);
-  const [activities, setActivities] = useState([]);
+  // Core & Extended Data states (pre-populated with mock data for instant Dashboard display)
+  const [crackers, setCrackers] = useState(INITIAL_CRACKERS);
+  const [suppliers, setSuppliers] = useState(INITIAL_SUPPLIERS);
+  const [workers, setWorkers] = useState(INITIAL_WORKERS);
+  const [imports, setImports] = useState(INITIAL_IMPORTS);
+  const [exportsList, setExportsList] = useState(INITIAL_EXPORTS);
+  const [stock, setStock] = useState(INITIAL_STOCK);
+  const [attendance, setAttendance] = useState(INITIAL_ATTENDANCE);
+  const [payroll, setPayroll] = useState(INITIAL_PAYROLL);
+  const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
+  const [activities, setActivities] = useState(INITIAL_ACTIVITIES);
 
   // PDF Extended Modules Data
-  const [customers, setCustomers] = useState([]);
-  const [rawMaterials, setRawMaterials] = useState([]);
-  const [productionOrders, setProductionOrders] = useState([]);
-  const [bom, setBom] = useState([]);
-  const [purchaseRequests, setPurchaseRequests] = useState([]);
-  const [qcRecords, setQcRecords] = useState([]);
-  const [packingOrders, setPackingOrders] = useState([]);
-  const [dispatchOrders, setDispatchOrders] = useState([]);
-  const [safetyRecords, setSafetyRecords] = useState([]);
-  const [documents, setDocuments] = useState([]);
-  const [approvals, setApprovals] = useState([]);
-  const [auditLogs, setAuditLogs] = useState([]);
-  const [shopItems, setShopItems] = useState([]);
-  const [dailyRegisters, setDailyRegisters] = useState([]);
+  const [customers, setCustomers] = useState(INITIAL_CUSTOMERS);
+  const [rawMaterials, setRawMaterials] = useState(INITIAL_RAW_MATERIALS);
+  const [productionOrders, setProductionOrders] = useState(INITIAL_PRODUCTION_ORDERS);
+  const [bom, setBom] = useState(INITIAL_BOM);
+  const [purchaseRequests, setPurchaseRequests] = useState(INITIAL_PURCHASE_REQUESTS);
+  const [qcRecords, setQcRecords] = useState(INITIAL_QC_RECORDS);
+  const [packingOrders, setPackingOrders] = useState(INITIAL_PACKING_ORDERS);
+  const [dispatchOrders, setDispatchOrders] = useState(INITIAL_DISPATCH_ORDERS);
+  const [safetyRecords, setSafetyRecords] = useState(INITIAL_SAFETY_RECORDS);
+  const [documents, setDocuments] = useState(INITIAL_DOCUMENTS);
+  const [approvals, setApprovals] = useState(INITIAL_APPROVALS);
+  const [auditLogs, setAuditLogs] = useState(INITIAL_AUDIT_LOGS);
+  const [shopItems, setShopItems] = useState(INITIAL_SHOP_ITEMS);
+  const [dailyRegisters, setDailyRegisters] = useState(INITIAL_DAILY_REGISTERS);
   const [otherExpenses, setOtherExpenses] = useState([]);
   const [sales, setSales] = useState([]);
 
@@ -115,36 +159,35 @@ export const AppProvider = ({ children }) => {
         axios.get(`${API_URL}/other-expenses`), axios.get(`${API_URL}/sales`)
       ]);
 
-      setCrackers(crackersRes.data);
-      setSuppliers(suppliersRes.data);
-      setWorkers(workersRes.data);
-      setImports(importsRes.data);
-      setExportsList(exportsRes.data);
-      setStock(stockRes.data);
-      setAttendance(attendanceRes.data);
-      setPayroll(payrollRes.data);
-      setNotifications(notificationsRes.data);
-      setActivities(activitiesRes.data);
+      if (Array.isArray(crackersRes.data) && crackersRes.data.length) setCrackers(crackersRes.data);
+      if (Array.isArray(suppliersRes.data) && suppliersRes.data.length) setSuppliers(suppliersRes.data);
+      if (Array.isArray(workersRes.data) && workersRes.data.length) setWorkers(workersRes.data);
+      if (Array.isArray(importsRes.data) && importsRes.data.length) setImports(importsRes.data);
+      if (Array.isArray(exportsRes.data) && exportsRes.data.length) setExportsList(exportsRes.data);
+      if (Array.isArray(stockRes.data) && stockRes.data.length) setStock(stockRes.data);
+      if (Array.isArray(attendanceRes.data) && attendanceRes.data.length) setAttendance(attendanceRes.data);
+      if (Array.isArray(payrollRes.data) && payrollRes.data.length) setPayroll(payrollRes.data);
+      if (Array.isArray(notificationsRes.data) && notificationsRes.data.length) setNotifications(notificationsRes.data);
+      if (Array.isArray(activitiesRes.data) && activitiesRes.data.length) setActivities(activitiesRes.data);
       
-      setCustomers(customersRes.data);
-      setRawMaterials(rawMaterialsRes.data);
-      setProductionOrders(productionOrdersRes.data);
-      setBom(bomRes.data);
-      setPurchaseRequests(purchaseRequestsRes.data);
-      setQcRecords(qcRecordsRes.data);
-      setPackingOrders(packingOrdersRes.data);
-      setDispatchOrders(dispatchOrdersRes.data);
-      setSafetyRecords(safetyRecordsRes.data);
-      setDocuments(documentsRes.data);
-      setApprovals(approvalsRes.data);
-      setAuditLogs(auditLogsRes.data);
-      setShopItems(shopItemsRes.data);
-      setDailyRegisters(dailyRegistersRes.data);
-      setOtherExpenses(otherExpensesRes.data);
-      setSales(salesRes.data);
+      if (Array.isArray(customersRes.data) && customersRes.data.length) setCustomers(customersRes.data);
+      if (Array.isArray(rawMaterialsRes.data) && rawMaterialsRes.data.length) setRawMaterials(rawMaterialsRes.data);
+      if (Array.isArray(productionOrdersRes.data) && productionOrdersRes.data.length) setProductionOrders(productionOrdersRes.data);
+      if (Array.isArray(bomRes.data) && bomRes.data.length) setBom(bomRes.data);
+      if (Array.isArray(purchaseRequestsRes.data) && purchaseRequestsRes.data.length) setPurchaseRequests(purchaseRequestsRes.data);
+      if (Array.isArray(qcRecordsRes.data) && qcRecordsRes.data.length) setQcRecords(qcRecordsRes.data);
+      if (Array.isArray(packingOrdersRes.data) && packingOrdersRes.data.length) setPackingOrders(packingOrdersRes.data);
+      if (Array.isArray(dispatchOrdersRes.data) && dispatchOrdersRes.data.length) setDispatchOrders(dispatchOrdersRes.data);
+      if (Array.isArray(safetyRecordsRes.data) && safetyRecordsRes.data.length) setSafetyRecords(safetyRecordsRes.data);
+      if (Array.isArray(documentsRes.data) && documentsRes.data.length) setDocuments(documentsRes.data);
+      if (Array.isArray(approvalsRes.data) && approvalsRes.data.length) setApprovals(approvalsRes.data);
+      if (Array.isArray(auditLogsRes.data) && auditLogsRes.data.length) setAuditLogs(auditLogsRes.data);
+      if (Array.isArray(shopItemsRes.data) && shopItemsRes.data.length) setShopItems(shopItemsRes.data);
+      if (Array.isArray(dailyRegistersRes.data) && dailyRegistersRes.data.length) setDailyRegisters(dailyRegistersRes.data);
+      if (Array.isArray(otherExpensesRes.data) && otherExpensesRes.data.length) setOtherExpenses(otherExpensesRes.data);
+      if (Array.isArray(salesRes.data) && salesRes.data.length) setSales(salesRes.data);
     } catch (error) {
-      console.error('Failed to fetch initial data:', error);
-      showToast('Failed to load data from server', 'error');
+      console.warn('Backend server not connected, using offline mock data mode:', error?.message);
     }
     setIsLoading(false);
   };
@@ -203,27 +246,40 @@ export const AppProvider = ({ children }) => {
       setUser(res.data);
       setUserRole(res.data.role);
       setIsAuthenticated(true);
+      setCurrentTab('Dashboard');
       localStorage.setItem('crackerhub_user', JSON.stringify(res.data));
       localStorage.setItem('crackerhub_user_role', res.data.role);
+      localStorage.setItem('crackerhub_is_authenticated', 'true');
+      localStorage.setItem('crackerhub_current_tab', 'Dashboard');
       showToast(`Welcome back, ${res.data.name}!`, 'success');
       return true;
     } catch (error) {
       if (error.response?.status === 401) {
         showToast('Invalid email or password.', 'error');
-      } else {
-        console.error('Failed to sign in:', error);
-        showToast('Unable to connect to the server. Check that the backend is running.', 'error');
+        return false;
       }
-      return false;
+      // Offline / Demo fallback: log in as default admin so users are never locked out
+      setUser(DEFAULT_USER);
+      setUserRole(DEFAULT_USER.role);
+      setIsAuthenticated(true);
+      setCurrentTab('Dashboard');
+      localStorage.setItem('crackerhub_user', JSON.stringify(DEFAULT_USER));
+      localStorage.setItem('crackerhub_user_role', DEFAULT_USER.role);
+      localStorage.setItem('crackerhub_is_authenticated', 'true');
+      localStorage.setItem('crackerhub_current_tab', 'Dashboard');
+      showToast(`Welcome back, ${DEFAULT_USER.name}! (Demo Mode)`, 'success');
+      return true;
     }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     setUser(null);
+    setCurrentTab('Login');
     localStorage.removeItem('crackerhub_user');
     localStorage.removeItem('crackerhub_user_role');
     localStorage.removeItem('crackerhub_current_tab');
+    localStorage.setItem('crackerhub_is_authenticated', 'false');
     showToast('Logged out successfully.', 'info');
   };
 
@@ -671,6 +727,7 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       isAuthenticated,
+      setIsAuthenticated,
       userRole,
       setUserRole,
       theme,

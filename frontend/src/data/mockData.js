@@ -196,3 +196,22 @@ export const CHART_TOP_SELLING = [
   { name: 'Sparklers', sales: 550, value: 275000 },
   { name: 'Ground Chakkars', sales: 310, value: 248000 }
 ];
+
+export const INITIAL_SHOP_ITEMS = [
+  { id: 'SHP-001', name: 'Lakshmi Crack', cost: 4500, category: 'Sound Crackers', description: 'Standard 100-packet bundle sound cracker', date: '2026-08-20' },
+  { id: 'SHP-002', name: 'Sanguchakra', cost: 3200, category: 'Chakkars', description: 'Fast spinning ground chakkar 50-pkt box', date: '2026-08-20' },
+  { id: 'SHP-003', name: 'Flower Pots', cost: 5800, category: 'Fountains', description: 'Deluxe metallic flower pots fountain', date: '2026-08-20' },
+  { id: 'SHP-004', name: 'Ground Chakkar', cost: 2900, category: 'Chakkars', description: 'Classic ground spinning wheel', date: '2026-08-21' },
+  { id: 'SHP-005', name: 'Sparklers 15cm', cost: 1800, category: 'Sparklers', description: 'Electric gold sparklers 120 pkts', date: '2026-08-21' },
+  { id: 'SHP-006', name: 'Rockets Sky Bomb', cost: 6400, category: 'Rockets', description: 'High altitude sound rocket', date: '2026-08-22' },
+  { id: 'SHP-007', name: 'Atom Bomb Deluxe', cost: 7200, category: 'Sound Crackers', description: 'Heavy sound loud explosion cracker', date: '2026-08-22' }
+];
+
+export const INITIAL_DAILY_REGISTERS = [
+  { id: 'REG-001', date: '2026-08-24', itemName: 'Lakshmi Crack', openingStock: 50, productionQty: 30, totalStock: 80, salesQty: 15, remainingStock: 65, remarks: 'Normal operations' },
+  { id: 'REG-002', date: '2026-08-25', itemName: 'Lakshmi Crack', openingStock: 65, productionQty: 25, totalStock: 90, salesQty: 25, remainingStock: 65, remarks: 'Pre-festival spike' },
+  { id: 'REG-003', date: '2026-08-26', itemName: 'Lakshmi Crack', openingStock: 65, productionQty: 20, totalStock: 85, salesQty: 20, remainingStock: 65, remarks: 'Batch delivered' },
+  { id: 'REG-004', date: '2026-08-25', itemName: 'Sanguchakra', openingStock: 20, productionQty: 15, totalStock: 35, salesQty: 25, remainingStock: 10, remarks: 'High retail demand' },
+  { id: 'REG-005', date: '2026-08-26', itemName: 'Sanguchakra', openingStock: 10, productionQty: 20, totalStock: 30, salesQty: 20, remainingStock: 10, remarks: 'Dispatched to vendor' }
+];
+

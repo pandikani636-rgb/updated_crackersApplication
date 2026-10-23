@@ -216,13 +216,13 @@ export const Navbar = () => {
               className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all"
             >
               <img
-                src={user.avatar}
-                alt={user.name}
+                src={user?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'}
+                alt={user?.name || 'Admin'}
                 className="w-7 h-7 rounded-lg object-cover ring-2 ring-orange-500/40"
               />
               <div className="hidden sm:block text-left">
-                <p className="text-xs font-bold text-slate-200 leading-tight">{user.name}</p>
-                <p className="text-[10px] text-orange-400 leading-tight font-semibold">{userRole}</p>
+                <p className="text-xs font-bold text-slate-200 leading-tight">{user?.name || 'Admin Owner'}</p>
+                <p className="text-[10px] text-orange-400 leading-tight font-semibold">{userRole || 'Super Admin'}</p>
               </div>
               <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
             </button>
@@ -230,14 +230,20 @@ export const Navbar = () => {
             {showProfileMenu && (
               <div className="absolute right-0 top-12 w-52 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-2 z-50">
                 <div className="px-3 py-2 border-b border-slate-800 mb-1">
-                  <p className="text-xs font-bold text-slate-200">{user.name}</p>
-                  <p className="text-[10px] text-slate-400 truncate">{user.email}</p>
+                  <p className="text-xs font-bold text-slate-200">{user?.name || 'Admin Owner'}</p>
+                  <p className="text-[10px] text-slate-400 truncate">{user?.email || 'admin@crackershop.com'}</p>
                 </div>
                 <button
                   onClick={() => { setCurrentTab('Settings'); setShowProfileMenu(false); }}
                   className="w-full text-left px-3 py-2 text-xs font-semibold text-slate-300 hover:bg-slate-800 rounded-xl transition-colors"
                 >
                   Account Settings
+                </button>
+                <button
+                  onClick={() => { setCurrentTab('Login'); setShowProfileMenu(false); }}
+                  className="w-full text-left px-3 py-2 text-xs font-semibold text-amber-400 hover:bg-slate-800 rounded-xl transition-colors"
+                >
+                  Switch / Admin Login
                 </button>
                 <button
                   onClick={() => { handleLogout(); setShowProfileMenu(false); }}

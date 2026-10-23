@@ -3,7 +3,7 @@ import { Flame, Sparkles, Lock, Mail, Eye, EyeOff, ArrowRight, ShieldCheck, Chec
 import { useApp } from '../../context/AppContext';
 
 export const LoginPage = () => {
-  const { handleLogin } = useApp();
+  const { handleLogin, setCurrentTab, setIsAuthenticated } = useApp();
 
   const [email, setEmail] = useState('admin@crackershop.com');
   const [password, setPassword] = useState('Admin@123');
@@ -110,7 +110,10 @@ export const LoginPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await handleLogin(email, password);
+      const ok = await handleLogin(email, password);
+      if (ok) {
+        setCurrentTab('Dashboard');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -182,9 +185,21 @@ export const LoginPage = () => {
         {/* Right Side: Clean Login Form */}
         <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between bg-slate-900/60">
           <div>
-            <div className="mb-8">
-              <h3 className="text-2xl font-bold text-white tracking-tight">Admin Sign In</h3>
-              <p className="text-xs text-slate-400 mt-1">Enter your manager credentials to access the shop dashboard.</p>
+            <div className="flex items-start justify-between gap-3 mb-8">
+              <div>
+                <h3 className="text-2xl font-bold text-white tracking-tight">Admin Sign In</h3>
+                <p className="text-xs text-slate-400 mt-1">Enter your manager credentials to access the shop dashboard.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsAuthenticated(true);
+                  setCurrentTab('Dashboard');
+                }}
+                className="text-xs font-semibold text-orange-400 hover:text-orange-300 px-3 py-1.5 rounded-xl bg-orange-500/10 border border-orange-500/20 hover:bg-orange-500/20 transition-all shrink-0 flex items-center gap-1"
+              >
+                Dashboard <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
 
             <form onSubmit={onSubmit} className="space-y-4">
