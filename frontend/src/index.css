@@ -1,0 +1,398 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #f97316;
+    --primary-glow: rgba(249, 115, 22, 0.35);
+    --secondary: #f59e0b;
+    --bg-main: #0b132b;
+    --bg-card: #1c2541;
+    --bg-sidebar: #0b132b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+  }
+
+  html {
+    font-size: 17.5px !important;
+  }
+
+  body {
+    background-color: #0b132b;
+    color: #f8fafc;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    overflow-x: hidden;
+  }
+}
+
+/* Global Font Size Enhancements */
+input, select, textarea, button {
+  font-size: 0.95rem !important;
+}
+
+.text-xs {
+  font-size: 0.85rem !important;
+  line-height: 1.35 !important;
+}
+
+.text-sm {
+  font-size: 0.975rem !important;
+  line-height: 1.45 !important;
+}
+
+.text-base {
+  font-size: 1.075rem !important;
+  line-height: 1.55 !important;
+}
+
+.text-lg {
+  font-size: 1.25rem !important;
+  line-height: 1.5 !important;
+}
+
+.text-xl {
+  font-size: 1.45rem !important;
+}
+
+.text-2xl {
+  font-size: 1.75rem !important;
+}
+
+.text-3xl {
+  font-size: 2.1rem !important;
+}
+
+table th {
+  font-size: 0.875rem !important;
+  letter-spacing: 0.04em !important;
+}
+
+table td {
+  font-size: 0.95rem !important;
+}
+
+
+/* Light Theme Overrides */
+.light-theme {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.light-theme .glass-panel {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-theme .glass-card {
+  background: #ffffff !important;
+  backdrop-filter: blur(8px) !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-theme .glass-card:hover {
+  border-color: rgba(249, 115, 22, 0.5) !important;
+  box-shadow: 0 8px 25px -4px rgba(249, 115, 22, 0.15) !important;
+}
+
+.light-theme aside {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+.light-theme header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme header input,
+.light-theme header button,
+.light-theme .glass-card input,
+.light-theme .glass-card select,
+.light-theme .glass-panel input,
+.light-theme .glass-panel select {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.light-theme table thead {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme table tbody tr {
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Ensure ALL light mode text elements have high contrast */
+.light-theme .text-white,
+.light-theme .text-slate-50,
+.light-theme .text-slate-100,
+.light-theme .text-slate-200,
+.light-theme .text-slate-300 {
+  color: #0f172a !important;
+}
+
+.light-theme .text-slate-400 {
+  color: #475569 !important;
+}
+
+.light-theme .text-slate-500 {
+  color: #64748b !important;
+}
+
+.light-theme .bg-slate-950,
+.light-theme .bg-slate-900,
+.light-theme .bg-slate-800,
+.light-theme [class*="bg-slate-950"],
+.light-theme [class*="bg-slate-900"],
+.light-theme [class*="bg-slate-800"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme [class*="from-slate-950"],
+.light-theme [class*="from-slate-900"],
+.light-theme [class*="to-slate-950"],
+.light-theme [class*="to-slate-900"] {
+  background-image: none !important;
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light-theme .border-slate-800,
+.light-theme .border-slate-700,
+.light-theme [class*="border-slate-800"],
+.light-theme [class*="border-slate-700"] {
+  border-color: #e2e8f0 !important;
+}
+
+/* Sidebar preservation in light theme */
+.light-theme aside {
+  background-color: #0b1329 !important;
+  border-color: #1e293b !important;
+}
+
+.light-theme aside .text-white,
+.light-theme aside .text-slate-50,
+.light-theme aside .text-slate-100,
+.light-theme aside .text-slate-200,
+.light-theme aside .text-slate-300 {
+  color: #f8fafc !important;
+}
+
+.light-theme aside .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+.light-theme aside .text-slate-500 {
+  color: #64748b !important;
+}
+
+.light-theme aside .text-orange-500,
+.light-theme aside .text-orange-400 {
+  color: #fb923c !important;
+}
+
+.light-theme aside .text-amber-400 {
+  color: #fbbf24 !important;
+}
+
+.light-theme aside [class*="bg-slate-950"],
+.light-theme aside [class*="bg-slate-900"],
+.light-theme aside [class*="bg-slate-800"] {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* Ensure buttons with saturated/colored backgrounds maintain crisp white text */
+.light-theme button[class*="bg-emerald"],
+.light-theme button[class*="bg-rose"],
+.light-theme button[class*="bg-blue"],
+.light-theme button[class*="bg-orange"],
+.light-theme button[class*="bg-amber"],
+.light-theme button[class*="bg-indigo"],
+.light-theme button[class*="bg-teal"],
+.light-theme button[class*="bg-cyan"],
+.light-theme button[class*="bg-purple"],
+.light-theme button[class*="from-emerald"],
+.light-theme button[class*="from-blue"],
+.light-theme button[class*="from-rose"],
+.light-theme button[class*="from-orange"],
+.light-theme button[class*="from-amber"],
+.light-theme button[class*="from-indigo"],
+.light-theme button[class*="from-teal"],
+.light-theme button[class*="from-purple"],
+.light-theme button[class*="bg-emerald"] *,
+.light-theme button[class*="bg-rose"] *,
+.light-theme button[class*="bg-blue"] *,
+.light-theme button[class*="bg-orange"] *,
+.light-theme button[class*="bg-amber"] *,
+.light-theme button[class*="bg-indigo"] *,
+.light-theme button[class*="bg-teal"] *,
+.light-theme button[class*="bg-cyan"] *,
+.light-theme button[class*="bg-purple"] *,
+.light-theme button[class*="from-emerald"] *,
+.light-theme button[class*="from-blue"] *,
+.light-theme button[class*="from-rose"] *,
+.light-theme button[class*="from-orange"] *,
+.light-theme button[class*="from-amber"] *,
+.light-theme button[class*="from-indigo"] *,
+.light-theme button[class*="from-teal"] *,
+.light-theme button[class*="from-purple"] * {
+  color: #ffffff !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f97316;
+}
+
+/* Custom Glassmorphism */
+.glass-panel {
+  background: rgba(28, 37, 65, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 8px 24px -4px rgba(249, 115, 22, 0.15);
+}
+
+/* Glow Utilities */
+.glow-orange {
+  box-shadow: 0 0 25px rgba(249, 115, 22, 0.35);
+}
+
+.glow-amber {
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
+}
+
+.text-gradient-fire {
+  background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtle Firework Sparkle Animation */
+@keyframes spark {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+.animate-spark {
+  animation: spark 1.5s ease-out infinite;
+}
+
+/* Fix Calendar Date Picker Visibility for Dark & Light Themes */
+input[type="date"] {
+  color-scheme: dark !important;
+  color: #f8fafc !important;
+}
+
+.light-theme input[type="date"] {
+  color-scheme: light !important;
+  color: #0f172a !important;
+}
+
+/* Calendar picker indicator styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer !important;
+  background-color: transparent !important;
+  filter: none !important;
+  opacity: 1 !important;
+  padding: 2px;
+  transition: transform 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  transform: scale(1.15);
+}
+
+.light-theme input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Printable Bill / Invoice Styles */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+  html, body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    height: auto !important;
+    overflow: visible !important;
+    font-size: 13px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body * {
+    visibility: hidden !important;
+  }
+  #printable-invoice, #printable-invoice * {
+    visibility: visible !important;
+  }
+  #printable-invoice {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12px !important;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  #printable-invoice table {
+    page-break-inside: auto;
+  }
+  #printable-invoice tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+}
+
+
