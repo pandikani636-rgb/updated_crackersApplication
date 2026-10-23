@@ -49,7 +49,7 @@ export const AppLayout = () => {
   const { isAuthenticated, currentTab, sidebarCollapsed, theme } = useApp();
 
   if (!isAuthenticated) {
-    return <LoginPage />;
+    return <DashboardView />;
   }
 
   const renderCurrentView = () => {
